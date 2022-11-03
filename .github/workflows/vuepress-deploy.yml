@@ -14,7 +14,7 @@ jobs:
       uses: jenkey2011/vuepress-deploy@master
       env:
         ACCESS_TOKEN: ${{ secrets.DEPLOY_DOCS }}
-        TARGET_REPO: feligo887/repo
+        TARGET_REPO: feligo887/blog
         TARGET_BRANCH: gh_pages
         BUILD_SCRIPT: yarn && yarn build
         BUILD_DIR: blog/.vuepress/dist/
