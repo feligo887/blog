@@ -2,6 +2,7 @@
 import { defineConfig } from "vuepress/config";
 var config_default = defineConfig({
   title: "\u4E50",
+  base: '/blog/',
   theme: "@vuepress/theme-blog",
   themeConfig: {
     repo: "vuejs/vuepress",

@@ -2,6 +2,7 @@ import { defineConfig } from "vuepress/config";
 
 export default defineConfig({
   title: "乐",
+  base: '/blog/',
   theme: '@vuepress/theme-blog',
   themeConfig: {
     repo: "vuejs/vuepress",
