@@ -7,7 +7,7 @@
     "vue-template-compiler": "^2.7.13"
   },
   "devDependencies": {
-    "@vuepress/plugin-blog": "^1.9.4",
+    "@vuepress/plugin-back-to-top": "^1.9.7",
     "@vuepress/theme-blog": "^2.3.3",
     "vuepress": "^1.9.7"
   },

@@ -11,41 +11,36 @@ export default defineConfig({
     nav: [
       { text: "Home", link: "/" },
       { text: "代码",link: "/code/"},
-      { text: "面试记录", link: "/interview/" },
+      { text: "面试", link: "/interview/" },
     ],
   },
   plugins: [
+    "@vuepress/plugin-back-to-top",
     [
       "@vuepress/blog",
       {
         directories: [
+          // {
+          //   id: 'post',
+          //   dirname: '_post',
+          //   path: '/',
+          // },
           {
-            // 当前分类的唯一 ID
-            id: 'post',
-            // 目标文件夹
-            dirname: '_posts',
-            // `entry page` (或者 `list page`) 的路径
-            path: '/',
-            pagination: {
-              lengthPerPage: 10
-            }
-          },
-          {
-            id: 'Code',
-            dirname: '_posts/code/',
+            id: 'code',
+            dirname:'code',
             path: '/code/',
             pagination: {
               lengthPerPage: 10
             }
           },
           {
-            id: 'Interview',
-            dirname: '_posts/interview/',
+            id: 'interview',
+            dirname: 'interview',
             path: '/interview/',
             pagination: {
               lengthPerPage: 10
             }
-          },
+          }
         ],
       },
     ],
