@@ -30,6 +30,22 @@ export default defineConfig({
               lengthPerPage: 10
             }
           },
+          {
+            id: 'Code',
+            dirname: '_posts/code/',
+            path: '/code/',
+            pagination: {
+              lengthPerPage: 10
+            }
+          },
+          {
+            id: 'Interview',
+            dirname: '_posts/interview/',
+            path: '/interview/',
+            pagination: {
+              lengthPerPage: 10
+            }
+          },
         ],
       },
     ],
