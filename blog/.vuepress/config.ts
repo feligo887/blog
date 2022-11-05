@@ -20,11 +20,11 @@ export default defineConfig({
       "@vuepress/blog",
       {
         directories: [
-          // {
-          //   id: 'post',
-          //   dirname: '_post',
-          //   path: '/',
-          // },
+          {
+            id: 'post',
+            dirname: '_post',
+            path: '/',
+          },
           {
             id: 'code',
             dirname:'code',
