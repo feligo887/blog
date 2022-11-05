@@ -1,7 +1,7 @@
 import { defineConfig } from "vuepress/config";
 
 export default defineConfig({
-  title: "乐",
+  title: "高产",
   base: '/blog/',
   theme: '@vuepress/theme-blog',
   themeConfig: {
