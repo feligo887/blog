@@ -9,7 +9,7 @@ export default defineConfig({
     editLinks: true,
     docsDir: "packages/docs/docs",
     nav: [
-      { text: "Home", link: "/" },
+      { text: "ECMAScript", link: "/" },
       { text: "代码",link: "/code/"},
       { text: "面试", link: "/interview/" },
     ],
@@ -21,8 +21,8 @@ export default defineConfig({
       {
         directories: [
           {
-            id: 'post',
-            dirname: '_post',
+            id: 'ECMAScript',
+            dirname: 'ECMAScript',
             path: '/',
           },
           {
