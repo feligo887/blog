@@ -10,7 +10,7 @@ export default defineConfig({
     docsDir: "packages/docs/docs",
     nav: [
       { text: "ECMAScript", link: "/" },
-      { text: "代码",link: "/code/"},
+      { text: "源码解析",link: "/sourceCode/"},
       { text: "面试", link: "/interview/" },
     ],
   },
@@ -26,9 +26,9 @@ export default defineConfig({
             path: '/',
           },
           {
-            id: 'code',
-            dirname:'code',
-            path: '/code/',
+            id: 'sourceCode',
+            dirname:'sourceCode',
+            path: '/sourceCode/',
             pagination: {
               lengthPerPage: 10
             }
