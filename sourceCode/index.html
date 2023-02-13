@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>SourceCode | 高产</title>
+    <meta name="generator" content="VuePress 1.9.8">
+    
+    <meta name="description" content="">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.a97dc209.css" as="style"><link rel="preload" href="/blog/assets/js/app.6d5b5a7a.js" as="script"><link rel="preload" href="/blog/assets/js/6.fe35a745.js" as="script"><link rel="preload" href="/blog/assets/js/14.380c173f.js" as="script"><link rel="preload" href="/blog/assets/js/4.42a7e1f0.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.2b827ecb.js"><link rel="prefetch" href="/blog/assets/js/11.f3973602.js"><link rel="prefetch" href="/blog/assets/js/12.c47f2e56.js"><link rel="prefetch" href="/blog/assets/js/13.10a43ffa.js"><link rel="prefetch" href="/blog/assets/js/15.5f02a601.js"><link rel="prefetch" href="/blog/assets/js/16.dad7f127.js"><link rel="prefetch" href="/blog/assets/js/17.f91ca90f.js"><link rel="prefetch" href="/blog/assets/js/18.bfff0def.js"><link rel="prefetch" href="/blog/assets/js/19.bfcad07f.js"><link rel="prefetch" href="/blog/assets/js/20.602df238.js"><link rel="prefetch" href="/blog/assets/js/21.1c165100.js"><link rel="prefetch" href="/blog/assets/js/22.04b1546a.js"><link rel="prefetch" href="/blog/assets/js/23.2ed1fe3c.js"><link rel="prefetch" href="/blog/assets/js/24.9e9399bc.js"><link rel="prefetch" href="/blog/assets/js/25.12c5acb7.js"><link rel="prefetch" href="/blog/assets/js/3.1b59b54d.js"><link rel="prefetch" href="/blog/assets/js/5.19af5458.js"><link rel="prefetch" href="/blog/assets/js/7.276877ea.js"><link rel="prefetch" href="/blog/assets/js/8.c7302ada.js"><link rel="prefetch" href="/blog/assets/js/9.6f699372.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.2ff59520.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.a97dc209.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/blog/" class="nav-link home-link">高产 </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="nav-item"><a href="/blog/sourceCode/" aria-current="page" class="nav-link router-link-exact-active router-link-active">源码解析</a></li><li class="nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/blog/" class="nav-link mobile-home-link">高产 </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="mobile-nav-item"><a href="/blog/sourceCode/" aria-current="page" class="nav-link router-link-exact-active router-link-active">源码解析</a></li><li class="mobile-nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div><div id="base-list-layout"><div itemscope="itemscope" itemtype="http://schema.org/Blog" class="ui-posts"><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2023/01/28/vue-loader%E8%A7%A3%E6%9E%90/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2023/01/28/vue-loader%E8%A7%A3%E6%9E%90/" class="nav-link">vue-loader源码解析</a></header> <p itemprop="description" class="ui-post-summary">
+        
+webpack-loader执行流程
+loader是从下至上执行（像栈），所以在config.js要合理配置
+每个loader上都有一个.pitch方法（可选），loader文件中，会先执行pitch。
+pitch的作用：拦截Loader的执行、预处理。
+pitch处理的数据只能在本文件生效，loader本身处理的可以透传。
+所有的loader中的pitch执行完 ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in wenchang
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2023-01-28T00:00:00.000Z">
+            Sat Jan 28 2023
+          </time></div> <!----></footer></article><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2023/01/28/vue-cli%E8%A7%A3%E6%9E%90/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2023/01/28/vue-cli%E8%A7%A3%E6%9E%90/" class="nav-link">vue-cli源码解析</a></header> <p itemprop="description" class="ui-post-summary">
+        
+检查项目node 版本
+获取VUECLISERVER配置或者本地执行项目的绝对路径，再配置webpack相关存储。
+添加脚手架里面自带plugin，并加上 built-in: 前缀和apply，map一个新的数组。
+便利package.json 的所有plugin，并塞选出 关于 vue 的plugin，合并两个数组，发布会新的map对象。
+
+**2、3、4 属于ne ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in qinzhou
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2023-01-28T00:00:00.000Z">
+            Sat Jan 28 2023
+          </time></div> <!----></footer></article><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2023/01/10/webpack%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E8%A7%A3%E6%9E%90/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2023/01/10/webpack%E6%A0%B8%E5%BF%83%E5%8A%9F%E8%83%BD%E8%A7%A3%E6%9E%90/" class="nav-link">webpack核心功能解析</a></header> <p itemprop="description" class="ui-post-summary">
+        
+webpack是很多前端开发在工程化构建项目，第一个学会使用的脚手架，哪怕你用的是 vue-cli或者create-react-app，他们底层都是 webpack 在封装、在开发的一个构建工具。
+
+但是webpack特别难学；第一，官网语焉不详的文档，学习成本高，上手难度大。第二，webpack更新到5，代码量进一步加大，大约有73548 行代码，这个量级下源码的阅读、分析、学习成本极高。我把 ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in wenchang
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2023-1-10">
+            Tue Jan 10 2023
+          </time></div> <!----></footer></article><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2022/12/31/balbel%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2022/12/31/balbel%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="nav-link">balbel the-super-tiny-compiler官方源码阅读解析</a></header> <p itemprop="description" class="ui-post-summary">
+        
+
+babel，是我们前端工程化开发中，必须使用的一个工具链，主要用于在当前和旧的浏览器或环境中，将 ECMAScript 2015+ 代码转换为 JavaScript 向后兼容版本的代码。
+
+但是在我的理解中balbel就是一个代码转换机。让我们写的代码都能被浏览器识别并执行。在阅读balbel官方[the-super-tiny-compiler ](https://github.com/jam ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in wenchang
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2022-12-31T00:00:00.000Z">
+            Sat Dec 31 2022
+          </time></div> <!----></footer></article><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2022/12/17/css-modules%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2022/12/17/css-modules%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/" class="nav-link">css Modules原理解析</a></header> <p itemprop="description" class="ui-post-summary">
+        
+
+在我们使用webpack或者其他构建工具，html的模块化方案有：ejs、SPA组件化，js的模块化方案：CommonJS、ES Modules，css模块化方案有：css Modules和css-in-js，今天我们介绍最基础的css-loader和style-loader做模块化，也是学习成本最低的一种。
+
+css-loader和style-loader帮助我们做了什么
+
+现代项目 ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in wenchang
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2022-12-17T00:00:00.000Z">
+            Sat Dec 17 2022
+          </time></div> <!----></footer></article><article itemprop="blogPost" itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="ui-post"><meta itemprop="mainEntityOfPage" content="/2022/11/05/node-cli/"> <header itemprop="name headline" class="ui-post-title"><a href="/blog/2022/11/05/node-cli/" class="nav-link">使用原生Node构建自己的cli</a></header> <p itemprop="description" class="ui-post-summary">
+        
+新建一个'bin'文件夹
+在 bin文件夹中新建一个cli.js文件
+在项目根目录打开命令行，输入：'npm init' or 'npm init -y'（package.json会自动引入bin目录下的文件）
+在项目根目录打开命令行，输入：'npm link' 把 package.json中bin 配置命令挂载到全局。
+在cli.js写入 '#! /usr/bin/env ...
+      </p> <footer><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="ui-post-meta ui-post-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">
+              in chengdu
+          </span></div> <div class="ui-post-meta ui-post-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2022-11-05T00:00:00.000Z">
+            Sat Nov 05 2022
+          </time></div> <!----></footer></article></div> <!----></div></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/blog/assets/js/app.6d5b5a7a.js" defer></script><script src="/blog/assets/js/6.fe35a745.js" defer></script><script src="/blog/assets/js/14.380c173f.js" defer></script><script src="/blog/assets/js/4.42a7e1f0.js" defer></script>
+  </body>
+</html>

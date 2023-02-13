@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>balbel the-super-tiny-compiler官方源码阅读解析 | 高产</title>
+    <meta name="generator" content="VuePress 1.9.8">
+    
+    <meta name="description" content="
+
+babel，是我们前端工程化开发中，必须使用的一个工具链，主要用于在当前和旧的浏览器或环境中，将 ECMAScript 2015+ 代码转换为 JavaScript 向后兼容版本的代码。
+
+但是在我的理解中balbel就是一个代码转换机。让我们写的代码都能被浏览器识别并执行。在阅读balbel官方[the-super-tiny-compiler ](https://github.com/jam ...">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.a97dc209.css" as="style"><link rel="preload" href="/blog/assets/js/app.6d5b5a7a.js" as="script"><link rel="preload" href="/blog/assets/js/6.fe35a745.js" as="script"><link rel="preload" href="/blog/assets/js/3.1b59b54d.js" as="script"><link rel="preload" href="/blog/assets/js/11.f3973602.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.2b827ecb.js"><link rel="prefetch" href="/blog/assets/js/12.c47f2e56.js"><link rel="prefetch" href="/blog/assets/js/13.10a43ffa.js"><link rel="prefetch" href="/blog/assets/js/14.380c173f.js"><link rel="prefetch" href="/blog/assets/js/15.5f02a601.js"><link rel="prefetch" href="/blog/assets/js/16.dad7f127.js"><link rel="prefetch" href="/blog/assets/js/17.f91ca90f.js"><link rel="prefetch" href="/blog/assets/js/18.bfff0def.js"><link rel="prefetch" href="/blog/assets/js/19.bfcad07f.js"><link rel="prefetch" href="/blog/assets/js/20.602df238.js"><link rel="prefetch" href="/blog/assets/js/21.1c165100.js"><link rel="prefetch" href="/blog/assets/js/22.04b1546a.js"><link rel="prefetch" href="/blog/assets/js/23.2ed1fe3c.js"><link rel="prefetch" href="/blog/assets/js/24.9e9399bc.js"><link rel="prefetch" href="/blog/assets/js/25.12c5acb7.js"><link rel="prefetch" href="/blog/assets/js/4.42a7e1f0.js"><link rel="prefetch" href="/blog/assets/js/5.19af5458.js"><link rel="prefetch" href="/blog/assets/js/7.276877ea.js"><link rel="prefetch" href="/blog/assets/js/8.c7302ada.js"><link rel="prefetch" href="/blog/assets/js/9.6f699372.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.2ff59520.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.a97dc209.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/blog/" class="nav-link home-link">高产 </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="nav-item"><a href="/blog/sourceCode/" class="nav-link">源码解析</a></li><li class="nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/blog/" class="nav-link mobile-home-link">高产 </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="mobile-nav-item"><a href="/blog/sourceCode/" class="nav-link">源码解析</a></li><li class="mobile-nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        balbel the-super-tiny-compiler官方源码阅读解析
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">   in wenchang</span></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2022-12-31T00:00:00.000Z">
+      Sat Dec 31 2022
+    </time></div> <!----></div></header> <div itemprop="articleBody" class="content__default"><h2 id="前言"><a href="#前言" class="header-anchor">#</a> 前言</h2> <p>babel，是我们前端工程化开发中，必须使用的一个工具链，主要用于在当前和旧的浏览器或环境中，将 ECMAScript 2015+ 代码转换为 JavaScript 向后兼容版本的代码。</p> <p>但是在我的理解中balbel就是一个代码转换机。让我们写的代码都能被浏览器识别并执行。在阅读balbel官方<a href="https://github.com/jamiebuilds/the-super-tiny-compiler" title="点击跳转" target="_blank" rel="noopener noreferrer">the-super-tiny-compiler <span><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg> <span class="sr-only">(opens new window)</span></span></a>给出的代码后，
+大多数代码都会经历以下步骤：</p> <ul><li>解析（parse）</li> <li>转换（transform）</li> <li>生成（generate）</li></ul> <p>我们将执行下列代码作为事例演示：</p> <div class="language- extra-class"><pre class="language-text"><code>fn(1 2);
+</code></pre></div><h2 id="解析-parse"><a href="#解析-parse" class="header-anchor">#</a> 解析（parse）</h2> <p>解析步骤接收代码并输出 AST。 这个步骤分为两个阶段：</p> <ul><li>词法分析（tokenizer）</li> <li>语法分析（parser）</li></ul> <div class="language- extra-class"><pre class="language-text"><code>//  词法分析阶段把字符串形式的代码转换为 令牌（tokens） 流。
+const tokens = [
+  { type: 'name',   value: 'fn' },
+  { type: 'paren',  value: '('  },
+  { type: 'number', value: '1'  },
+  { type: 'number', value: '2'  },
+  { type: 'paren',  value: ')'  }
+];
+
+// 语法分析阶段会把一个令牌流转换成 AST 的形式。 这个阶段会使用令牌中的信息把它们转换成一个 AST 的表述结构，这样更易于后续的操作。
+
+const ast = {
+  type: 'Program',
+  body: [{
+    type: 'CallExpression',
+    name: 'fn',
+    params: [{
+      type: 'NumberLiteral',
+      value: '1'
+    },{
+      type: 'NumberLiteral',
+      value: '2'
+    }]
+  }]
+};
+
+</code></pre></div><h2 id="转换-transform"><a href="#转换-transform" class="header-anchor">#</a> 转换（transform）</h2> <p>这里的代码是最复杂的，但是逻辑很简单。大致分为以下几个步骤：</p> <ol><li>声明一个newAst作为容器接受转换后的数据。</li> <li>调用traverser函数，传入AST和一个obj对象</li></ol> <div class="language- extra-class"><pre class="language-text"><code>    traverser(ast, {
+        NumberLiteral: {
+            enter(node, parent) {
+                parent._context.push({
+                    type: 'NumberLiteral',
+                    value: node.value,
+                });
+            },
+        },
+
+        StringLiteral: {
+            enter(node, parent) {
+                parent._context.push({
+                    type: 'StringLiteral',
+                    value: node.value,
+                });
+            },
+        },
+
+        CallExpression: {
+            enter(node, parent) {
+                let expression = {
+                    type: 'CallExpression',
+                    callee: {
+                        type: 'Identifier',
+                        name: node.name,
+                    },
+                    arguments: [],
+                };
+
+                node._context = expression.arguments;
+
+                if (parent.type !== 'CallExpression') {
+
+                    expression = {
+                        type: 'ExpressionStatement',
+                        expression: expression,
+                    };
+                }
+
+                parent._context.push(expression);
+            },
+        }
+    });
+</code></pre></div><ol start="3"><li>执行traverser；traverser内部是多个函数，不断递归调用 AST（因为AST是多位数组），在此过程中对节点进行添加、更新及移除等操作。</li> <li>返回newAST。</li></ol> <div class="language- extra-class"><pre class="language-text"><code>// 转换步骤接收 AST 并对其进行遍历，在此过程中对节点进行添加、更新及移除等操作。 这是 Babel 或是其他编译器中最复杂的过程 同时也是插件将要介入工作的部分
+
+const newAst = {
+  type: 'Program',
+  body: [{
+    type: 'ExpressionStatement',
+    expression: {
+      type: 'CallExpression',
+      callee: {
+        type: 'Identifier',
+        name: 'fn'
+      },
+      arguments: [{
+        type: 'NumberLiteral',
+        value: '1'
+      },{
+        type: 'NumberLiteral',
+        value: '2'
+      }]
+    }
+  }]
+};
+</code></pre></div><h2 id="生成-generate"><a href="#生成-generate" class="header-anchor">#</a> 生成（generate）</h2> <p>代码生成步骤把最终（经过一系列转换之后）的 AST 转换成字符串形式的代码，同时还会创建源码映射（source maps）。</p> <p>代码生成其实很简单：深度优先遍历整个 AST，然后根据 type类型 判断、处理 拼接可以表示转换后代码的字符串。</p> <p>下面的主要功能代码：</p> <div class="language- extra-class"><pre class="language-text"><code>function codeGenerator(node) {
+
+    switch (node.type) {
+
+        case 'Program':
+            return node.body.map(codeGenerator)
+                .join('\n');
+
+        case 'ExpressionStatement':
+            return (
+                codeGenerator(node.expression) +
+                ';'
+            );
+
+        case 'CallExpression':
+            return (
+                codeGenerator(node.callee) +
+                '(' +
+                node.arguments.map(codeGenerator)
+                    .join(', ') +
+                ')'
+            );
+
+        case 'Identifier':
+            return node.name;
+
+        case 'NumberLiteral':
+            return node.value;
+
+        case 'StringLiteral':
+            return '&quot;' + node.value + '&quot;';
+
+        default:
+            throw new TypeError(node.type);
+    }
+}
+</code></pre></div><p>执行完上述代码后返回 fn(1, 2) 浏览器能正常执行的代码了</p> <h3 id="代码流程"><a href="#代码流程" class="header-anchor">#</a> 代码流程</h3> <img src="/blog/assets/img/2022-12-31-balbel源码解析.23e11177.png"></div> <footer><!----> <hr> <!----></footer></article> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h2 active"><a href="#前言" title="前言">前言</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#解析-parse" title="解析（parse）">解析（parse）</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#转换-transform" title="转换（transform）">转换（transform）</a></div><div class="vuepress-toc-item vuepress-toc-h2"><a href="#生成-generate" title="生成（generate）">生成（generate）</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#代码流程" title="代码流程">代码流程</a></div></div></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/blog/assets/js/app.6d5b5a7a.js" defer></script><script src="/blog/assets/js/6.fe35a745.js" defer></script><script src="/blog/assets/js/3.1b59b54d.js" defer></script><script src="/blog/assets/js/11.f3973602.js" defer></script>
+  </body>
+</html>

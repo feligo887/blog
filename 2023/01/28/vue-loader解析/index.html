@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>vue-loader源码解析 | 高产</title>
+    <meta name="generator" content="VuePress 1.9.8">
+    
+    <meta name="description" content="
+webpack-loader执行流程
+loader是从下至上执行（像栈），所以在config.js要合理配置
+每个loader上都有一个.pitch方法（可选），loader文件中，会先执行pitch。
+pitch的作用：拦截Loader的执行、预处理。
+pitch处理的数据只能在本文件生效，loader本身处理的可以透传。
+所有的loader中的pitch执行完 ...">
+    
+    <link rel="preload" href="/blog/assets/css/0.styles.a97dc209.css" as="style"><link rel="preload" href="/blog/assets/js/app.6d5b5a7a.js" as="script"><link rel="preload" href="/blog/assets/js/6.fe35a745.js" as="script"><link rel="preload" href="/blog/assets/js/3.1b59b54d.js" as="script"><link rel="preload" href="/blog/assets/js/24.9e9399bc.js" as="script"><link rel="prefetch" href="/blog/assets/js/10.2b827ecb.js"><link rel="prefetch" href="/blog/assets/js/11.f3973602.js"><link rel="prefetch" href="/blog/assets/js/12.c47f2e56.js"><link rel="prefetch" href="/blog/assets/js/13.10a43ffa.js"><link rel="prefetch" href="/blog/assets/js/14.380c173f.js"><link rel="prefetch" href="/blog/assets/js/15.5f02a601.js"><link rel="prefetch" href="/blog/assets/js/16.dad7f127.js"><link rel="prefetch" href="/blog/assets/js/17.f91ca90f.js"><link rel="prefetch" href="/blog/assets/js/18.bfff0def.js"><link rel="prefetch" href="/blog/assets/js/19.bfcad07f.js"><link rel="prefetch" href="/blog/assets/js/20.602df238.js"><link rel="prefetch" href="/blog/assets/js/21.1c165100.js"><link rel="prefetch" href="/blog/assets/js/22.04b1546a.js"><link rel="prefetch" href="/blog/assets/js/23.2ed1fe3c.js"><link rel="prefetch" href="/blog/assets/js/25.12c5acb7.js"><link rel="prefetch" href="/blog/assets/js/4.42a7e1f0.js"><link rel="prefetch" href="/blog/assets/js/5.19af5458.js"><link rel="prefetch" href="/blog/assets/js/7.276877ea.js"><link rel="prefetch" href="/blog/assets/js/8.c7302ada.js"><link rel="prefetch" href="/blog/assets/js/9.6f699372.js"><link rel="prefetch" href="/blog/assets/js/vuejs-paginate.2ff59520.js">
+    <link rel="stylesheet" href="/blog/assets/css/0.styles.a97dc209.css">
+  </head>
+  <body>
+    <div id="app" data-server-rendered="true"><div id="vuepress-theme-blog__global-layout"><section id="header-wrapper"><header id="header"><div class="header-wrapper"><div class="title"><a href="/blog/" class="nav-link home-link">高产 </a></div> <div class="header-right-wrap"><ul class="nav"><li class="nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="nav-item"><a href="/blog/sourceCode/" class="nav-link">源码解析</a></li><li class="nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li></ul> <div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <!----></div></div></header></section> <div id="mobile-header"><div class="mobile-header-bar"><div class="mobile-header-title"><a href="/blog/" class="nav-link mobile-home-link">高产 </a> <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-menu"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg></div> <div class="mobile-menu-wrapper"><hr class="menu-divider"> <ul class="mobile-nav"><li class="mobile-nav-item"><a href="/blog/" class="nav-link">ECMAScript</a></li><li class="mobile-nav-item"><a href="/blog/sourceCode/" class="nav-link">源码解析</a></li><li class="mobile-nav-item"><a href="/blog/interview/" class="nav-link">面试</a></li> <li class="mobile-nav-item"><!----></li></ul></div></div></div> <div class="content-wrapper"><div id="vuepress-theme-blog__post-layout"><article itemscope="itemscope" itemtype="https://schema.org/BlogPosting" class="vuepress-blog-theme-content"><header><h1 itemprop="name headline" class="post-title">
+        vue-loader源码解析
+      </h1> <div class="post-meta"><div itemprop="publisher author" itemtype="http://schema.org/Person" itemscope="itemscope" class="post-meta-author"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-navigation"><polygon points="3 11 22 2 13 21 11 13 3 11"></polygon></svg> <span itemprop="name">December</span> <span itemprop="address">   in wenchang</span></div> <div class="post-meta-date"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clock"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> <time pubdate itemprop="datePublished" datetime="2023-01-28T00:00:00.000Z">
+      Sat Jan 28 2023
+    </time></div> <!----></div></header> <div itemprop="articleBody" class="content__default"><h3 id="前置知识点"><a href="#前置知识点" class="header-anchor">#</a> 前置知识点</h3> <h4 id="webpack-loader执行流程"><a href="#webpack-loader执行流程" class="header-anchor">#</a> webpack-loader执行流程</h4> <ul><li>loader是从下至上执行（像栈），所以在config.js要合理配置</li> <li>每个loader上都有一个.pitch方法（可选），loader文件中，会先执行pitch。</li> <li>pitch的作用：拦截Loader的执行、预处理。</li> <li>pitch处理的数据只能在本文件生效，loader本身处理的可以透传。</li> <li>所有的loader中的pitch执行完毕之后才会执行loader本身。</li></ul> <p><strong>官方事例：</strong></p> <div class="language- extra-class"><pre class="language-text"><code>webpack.config.js
+module.exports = {
+  //...
+  module: {
+    rules: [
+      {
+        //...
+        use: [
+          'a-loader',
+          'b-loader',
+          'c-loader'
+        ]
+      }
+    ]
+  }
+};
+</code></pre></div><div class="language- extra-class"><pre class="language-text"><code>console.log
+
+|- a-loader `pitch`
+  |- b-loader `pitch`
+    |- c-loader `pitch`
+      |- requested module is picked up as a dependency
+    |- c-loader normal execution
+  |- b-loader normal execution
+|- a-loader normal execution
+</code></pre></div><h4 id="vue-loader循环解析"><a href="#vue-loader循环解析" class="header-anchor">#</a> vue-loader循环解析</h4> <ul><li>.vue模板中 template style script 等，被分割成块。</li> <li>在读取 .vue 文件，这些块会被loader不断引入（import），不断的读取.vue文件，不断引入，直到全被引入完毕。</li></ul> <h4 id="手动干预loader执行"><a href="#手动干预loader执行" class="header-anchor">#</a> 手动干预loader执行</h4> <ul><li>所有loader 都不执行</li></ul> <div class="language- extra-class"><pre class="language-text"><code> import ' - !${resourcePath}?vue&amp;type=template&amp;id=12345'; /n${content}'
+</code></pre></div><ul><li>只执行某个loader</li></ul> <div class="language- extra-class"><pre class="language-text"><code>=import '- !${path. resolve(__dirname, 'Loader2.js')
+}!${resourcePath}?vue&amp;type=template&amp;id=12345&quot;;\n${content}
+</code></pre></div><ul><li></li></ul> <h3 id="vue-loader-plugin的做了什么"><a href="#vue-loader-plugin的做了什么" class="header-anchor">#</a> vue-loader-plugin的做了什么</h3> <ol><li>在vue-loader-plugin添加一个标记，判断vue-loader-plugin是否存在</li> <li>收集webpack 引用的所有rules，拷贝并用webpack转化成 rulesSet 能被loader使用</li> <li>动态添加其余的loader，例如：template-loader、pitcher-loader，并把loader添加到执行队列。</li></ol> <h3 id="vue-loader的做了什么"><a href="#vue-loader的做了什么" class="header-anchor">#</a> vue-loader的做了什么</h3> <p><strong>三个块 （template、css、js）都是这样重复，执行顺序是 template -&gt; js -&gt; css</strong></p> <h4 id="第一阶段"><a href="#第一阶段" class="header-anchor">#</a> 第一阶段</h4> <ol><li>在vue-loader-plugin添加一个标记，判断vue-loader-plugin是否存在</li> <li>解析代码：获取文件路径、AST抽象代码树，拆分代码块（html，css，js等）生成一个 has值。</li> <li>判断是代码所在环境，是否js语法糖，template渲染方式、css模块化等，生成新的块名：{名称}{type}{has}，</li> <li>根据块的新名称，生成新的引用路径，并动态引用该模块（此时的模块不是真实的代码）。</li> <li>增加热更新的源码，方便修改代码时快速引用。</li></ol> <h4 id="第二阶段"><a href="#第二阶段" class="header-anchor">#</a> 第二阶段</h4> <ol><li>通过pitcher的resourceQuery方法，过滤掉非vue block</li> <li>去除vue-loader不能使用的 ESlint-loader，调用合适的loader（template-loader、css-loader、js-loader等）解析，</li> <li>生成一个带有loader地址的新引用路径，return 新路径并结束 后续所有loader的执行。</li></ol> <h4 id="第三阶段"><a href="#第三阶段" class="header-anchor">#</a> 第三阶段</h4> <ol><li>进入pitcher 生成新的模块源码，再次执行 vue-loader。</li> <li>判断不同的模块，执行对应的 loader（template-loader、css-loader、js-loader等）</li> <li>template 生成 render 函数， js 生成 带有 script 标签的块， css 生成带有 style 标签的块</li></ol> <h3 id="简单总结"><a href="#简单总结" class="header-anchor">#</a> 简单总结</h3> <ol><li>利用webpack机制，初始化阶段执行plugin，会直接执行vue-loader-plugin。</li> <li>vue-loader-plugin 在 loader 执行之前在 complier.hooks.compilation.tap 的钩子里面 定义了 vue-loader 的一个key，其作用是在执行loader 检查 vue-loader 是否执行</li> <li>vue-loader-plugin 添加 解析.vue文件需要的loader，保证 vue-loader 能正常编译</li> <li>webpack-loader的pitcher 拦截文件转为 js，不断调用 自身 寻找loader 编译代码生成带有loader标识的新路径。</li> <li>获取路径中源码内容，调用loader编程，成为最终的 render 函数 或者 code</li></ol></div> <footer><!----> <hr> <!----></footer></article> <div class="sticker vuepress-toc"><div class="vuepress-toc-item vuepress-toc-h3 active"><a href="#前置知识点" title="前置知识点">前置知识点</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#vue-loader-plugin的做了什么" title="vue-loader-plugin的做了什么">vue-loader-plugin的做了什么</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#vue-loader的做了什么" title="vue-loader的做了什么">vue-loader的做了什么</a></div><div class="vuepress-toc-item vuepress-toc-h3"><a href="#简单总结" title="简单总结">简单总结</a></div></div></div></div> <footer class="footer" data-v-3d9deeb8><div class="footer-left-wrap" data-v-3d9deeb8><ul class="contact" data-v-3d9deeb8></ul></div> <div class="footer-right-wrap" data-v-3d9deeb8><ul class="copyright" data-v-3d9deeb8></ul></div></footer></div><div class="global-ui"><!----></div></div>
+    <script src="/blog/assets/js/app.6d5b5a7a.js" defer></script><script src="/blog/assets/js/6.fe35a745.js" defer></script><script src="/blog/assets/js/3.1b59b54d.js" defer></script><script src="/blog/assets/js/24.9e9399bc.js" defer></script>
+  </body>
+</html>
