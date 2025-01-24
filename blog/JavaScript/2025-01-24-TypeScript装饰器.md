@@ -13,7 +13,7 @@ location: chengdu
 > 在 TypeScript 中，装饰器（Decorators）是一种特殊的语法，用于为类、类的属性、方法或参数添加额外的功能。它是一个函数，可以通过注解的方式修改或扩展目标的行为。
 > 装饰器主要用于元编程，它类似于一种“语法糖”，允许开发者以更清晰和声明式的方式实现功能。
 
-#### 装饰器的分类
+### 装饰器的分类
 
 1. 类装饰器
    用于修改或替换整个类。
@@ -39,7 +39,7 @@ location: chengdu
 }
 ```
 
-#### 装饰器的基本语法
+### 装饰器的基本语法
 
 **1. 类装饰器**
 
@@ -150,15 +150,65 @@ class MyClass {
 // 输出：Parameter Decorated: sayHello, index: 0
 ```
 
-#### 装饰器的执行顺序
+### 装饰器的执行顺序
 
 装饰器的执行顺序遵循以下规则：
 1.	属性装饰器 → 参数装饰器 → 方法装饰器 → 类装饰器。
 2.	先执行内层装饰器，再执行外层装饰器（从下往上，从右往左）。
 
-#### 实际运用
+### 实际运用
 
 ```javascript
+// utils/fetch.ts
+export const Get = ( url: string ) => {
+  return ( _1: any, _2: string, descriptor: PropertyDescriptor ) => {
+    const originalMethod = descriptor.value;
 
+    descriptor.value = async function( ...args: any[] ){
+      try {
+        const response = await fetch( url );
+        if ( !response.ok ) {
+          throw new Error( `HTTP error! status: ${ response.status }` );
+        }
+        const json = await response.json();
+        // 调用原始方法，将数据作为参数传入
+        return originalMethod.call( this, json, ...args );
+      } catch ( error ) {
+        // 捕获错误并传递给原始方法
+        return originalMethod.call( this, error, ...args );
+      }
+    };
+
+    return descriptor;
+  };
+};
+
+
+```
+
+```javascript
+// api.ts
+import { Get } from '@/utils/fetch'
+
+class Demo {
+
+  constructor(){}
+
+  @Get( 'http://jsonplaceholder.typicode.com/posts' )
+  static async list( res:any ){
+    return res
+  }
+}
+
+export default Demo
+
+```
+
+```javascript
+// 调用
+const sendApiFunc = async () => {
+    const res = await api.list()
+    console.log( res )
+}
 
 ```
