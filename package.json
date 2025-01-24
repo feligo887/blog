@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "vue-template-compiler": "^2.7.13"
+    "vue-template-compiler": "^2.7.16"
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.9.7",
+    "@vuepress/plugin-back-to-top": "^1.9.10",
     "@vuepress/theme-blog": "^2.3.3",
-    "vuepress": "^1.9.7"
+    "vuepress": "^1.9.10"
   },
   "scripts": {
     "dev": "vuepress dev blog",
